@@ -18,6 +18,7 @@ def index(request):
     # This line will get the Customer model from the other app, it can now be used to query the db for Customers
     Customer = apps.get_model('customers.Customer')
     logged_in_user = request.user
+
     try:
         today_date = date.today()
         today_day = calendar.day_name[today_date.weekday()]
@@ -26,7 +27,6 @@ def index(request):
         pickup_today = customers_in_zip.filter(weekly_pickup = today_day) | customers_in_zip.filter(one_time_pickup = today_date)
         non_suspended = pickup_today.exclude(suspend_start__lt = today_date, suspend_end__gt = today_date)
         customers_not_picked_up = non_suspended.exclude(date_of_last_pickup = today_date)
-        
         
         context = {
             'logged_in_employee': logged_in_employee,
@@ -79,7 +79,7 @@ def serviced(request,customer_id):
 
     update_balance(customer_id)
 
-    return HttpResponseRedirect(reverse('employees:route'))
+    return HttpResponseRedirect(reverse('employees:index'))
 
 
 def update_balance(customer_id):
