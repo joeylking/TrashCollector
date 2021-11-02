@@ -87,3 +87,23 @@ def update_balance(customer_id):
     customer_being_confirmed = Customer.objects.get(pk = customer_id)
     customer_being_confirmed.balance += 20
     customer_being_confirmed.save()
+
+
+def route(request):
+    logged_in_user = request.user
+    logged_in_employee = Employee.objects.get(user=logged_in_user)
+    logged_in_employee_zip_code = logged_in_employee.zip_code
+    today = date.today
+    curr_date = date.today()
+
+    Customer = apps.get_model('customers.Customer')
+    customer_same_zip_code = Customer.objects.filter(zip_code = logged_in_employee_zip_code)
+    customer_pick_up_today = customer_same_zip_code.filter(QueryDict(weekly_pickup = calendar.day_name[curr_date.weekday()])|QueryDict(one_time_pickup = curr_date))
+    and_not_suspended = customer_pick_up_today.exclude(QueryDict(suspend_start__lte=curr_date)&QueryDict(suspend_end__gte=curr_date))
+    and_not_picked_up = and_not_suspended.exclude(date_of_last_pickup = curr_date)
+    context = {
+        'valid_route': and_not_picked_up,
+        'today': today,
+        'logged_in_employee':logged_in_employee.name
+    }
+    return render(request, 'employees/route.html', context)
