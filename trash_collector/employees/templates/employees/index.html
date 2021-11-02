@@ -6,7 +6,7 @@
   {% if user.is_authenticated %}
     Hello Employee {{ user.username }}! Today is {{ today_day }} {{ today_date }} These customers need pickup: 
     <ul>
-    {% for customer in non_suspended %}
+    {% for customer in customers_not_picked_up %}
       <li>{{customer.name}}</li>
     {% endfor %}
     </ul>

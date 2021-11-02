@@ -23,14 +23,15 @@ def index(request):
         logged_in_employee = Employee.objects.get(user=logged_in_user)
         customers_in_zip = Customer.objects.filter(zip_code = logged_in_employee.zip_code)
         pickup_today = customers_in_zip.filter(weekly_pickup = today_day) | customers_in_zip.filter(one_time_pickup = today_date)
-        non_suspended = pickup_today.filter(today_date < pickup_today.suspend_start) |  pickup_today.filter(today_date > pickup_today.suspend_end)
+        non_suspended = pickup_today.exclude(suspend_start__lt = today_date, suspend_end__gt = today_date)
+        customers_not_picked_up = non_suspended.exclude(date_of_last_pickup = today_date)
         
         
         context = {
             'logged_in_employee': logged_in_employee,
             'today_date': today_date,
             'today_day' : today_day,
-            'non_suspended': non_suspended
+            'customers_not_picked_up': customers_not_picked_up
         }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
