@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http.request import QueryDict
 from django.shortcuts import render
 from django.apps import apps
 from django.urls import reverse
