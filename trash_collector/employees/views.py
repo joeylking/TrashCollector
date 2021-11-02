@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
 from .models import Employee
+import calendar
 
 # Create your views here.
 
@@ -58,3 +59,24 @@ def edit_profile(request):
         }
         return render(request, 'employees/edit_profile.html', context)
 
+def serviced(request,customer_id):
+    logged_in_user = request.user
+
+    Customer = apps.get_model('customers.Customer')
+    customer_info = Customer.objects.get(pk = customer_id)
+    curr_date = date.today()
+        
+    if customer_info.date_of_last_pickup != curr_date:
+        customer_info.date_of_last_pickup= curr_date  
+        customer_info.save()
+
+    update_balance(customer_id)
+
+    return HttpResponseRedirect(reverse('employees:route'))
+
+
+def update_balance(customer_id):
+    Customer = apps.get_model('customers.Customer')
+    customer_being_confirmed = Customer.objects.get(pk = customer_id)
+    customer_being_confirmed.balance += 20
+    customer_being_confirmed.save()
