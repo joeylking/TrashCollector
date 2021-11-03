@@ -1,6 +1,6 @@
 {% extends 'employees/employee_base.html' %}
 
-{% block title %}{% block header %} {{logged_in_employee}}'s Daily Routes {% endblock %}{% endblock %}
+{% block title %}{% block header %} {{logged_in_employee}}'s {{ day }} Routes {% endblock %}{% endblock %}
 
 {% block content %}
 
@@ -9,11 +9,11 @@
 <a href="{% url 'employees:daily' 'Wednesday' %}">Wednesday</a> | 
 <a href="{% url 'employees:daily' 'Thursday' %}">Thursday</a> | 
 <a href="{% url 'employees:daily' 'Friday' %}">Friday</a> | 
-
-
-    <ul>
+<br>
+<br>
+    <ul class="list-group">
     {% for customer in customers %}
-      <li>{{customer.name}} - {{customer.address}}</li>  
+      <li class="list-group-item">{{customer.name}} - {{customer.address}}</li>  
     {% endfor %}
     </ul>
 
