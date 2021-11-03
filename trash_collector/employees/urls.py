@@ -9,7 +9,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('new/', views.create, name="create"),
     path('edit_profile/', views.edit_profile, name="edit_profile"),
-    # path('route/', views.route, name="route"),
+    path('routes/<str:day>', views.routes, name="routes"),
     path('serviced/<int:customer_id>/', views.serviced, name="serviced"),
     # path('choose_route/', views.choose_route, name="choose_route"),
 ]

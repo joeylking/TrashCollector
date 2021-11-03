@@ -1,0 +1,20 @@
+{% extends 'employees\employee_base.html' %}
+
+{% block title %}{% block header %} {{logged_in_employee}}'s Daily Routes {% endblock %}{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'employees:routes' Monday %}">Monday</a> | 
+<a href="{% url 'employees:routes' Tuesday %}">Tuesday</a> | 
+<a href="{% url 'employees:routes' Wednesday %}">Wednesday</a> | 
+<a href="{% url 'employees:routes' Thursday %}">Thursday</a> | 
+<a href="{% url 'employees:routes' Friday %}">Friday</a> | 
+ 
+
+Employee {{ user.username }}'s weekly pickups for {{ day }} are: 
+    <ul>
+    {% for customer in daily_pickups %}
+      <li>{{customer.name}} - {{customer.address}}</li>  
+    </ul>
+    {% endfor %}
+{% endblock %}

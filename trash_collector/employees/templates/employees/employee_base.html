@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-
     <a class="nav-item nav-link" href="{% url 'employees:index' %}">Home</a>
-    <a class="nav-item nav-link" href="{% url 'employees:route' %}">Todays Route</a>
-    <a class="nav-item nav-link" href="{% url 'employees:choose_route' %}">Daily Route</a>
+    <a class="nav-item nav-link" href="{% url 'employees:routes' 'Monday' %}">Routes</a>
     <a class="nav-item nav-link" href="{% url 'employees:edit_profile' %}">Edit Profile</a>
-   
 {% endblock %}

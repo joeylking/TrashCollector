@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'employees/employee_base.html' %} 
 
 {% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
 
@@ -7,7 +7,7 @@
     Hello Employee {{ user.username }}! Today is {{ today_day }} {{ today_date }} These customers need pickup: 
     <ul>
     {% for customer in customers_not_picked_up %}
-      <li>{{customer.name}}</li>  
+      <li>{{customer.name}} - {{customer.address}}</li>  
       <a class="btn btn-primary btn-sm" href="{% url 'employees:serviced' customer.id %}" role="button">Mark Serviced</a> <br>
     {% endfor %}
     </ul>
