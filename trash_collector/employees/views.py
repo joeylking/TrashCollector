@@ -74,31 +74,33 @@ def serviced(request,customer_id):
     curr_date = date.today()
         
     if customer_info.date_of_last_pickup != curr_date:
-        customer_info.date_of_last_pickup= curr_date  
+        customer_info.date_of_last_pickup= curr_date
+        customer_info.balance += 20
         customer_info.save()
-
-    update_balance(customer_id)
 
     return HttpResponseRedirect(reverse('employees:index'))
 
 
-def update_balance(customer_id):
-    Customer = apps.get_model('customers.Customer')
-    customer_being_confirmed = Customer.objects.get(pk = customer_id)
-    customer_being_confirmed.balance += 20
-    customer_being_confirmed.save()
+def routes(request):
+    logged_in_user = request.user
+    logged_in_employee = Employee.objects.get(user=logged_in_user)
+    
+    context = {
+        'logged_in_employee':logged_in_employee,
+    }
 
+    return render(request, 'employees/routes.html', context)
 
-def routes(request, day):
+def daily(request, day):
     logged_in_user = request.user
     logged_in_employee = Employee.objects.get(user=logged_in_user)
     Customer = apps.get_model('customers.Customer')
     daily_pickups = Customer.objects.filter(weekly_pickup = day)
-    
+
     context = {
         'logged_in_employee':logged_in_employee,
         'daily_pickups' : daily_pickups,
-        'day': day
+        'day' : day
     }
 
-    return render(request, 'employees/routes.html', context)
+    return render(request, 'employees:daily', context)

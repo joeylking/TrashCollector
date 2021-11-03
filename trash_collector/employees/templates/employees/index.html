@@ -8,7 +8,7 @@
     <ul>
     {% for customer in customers_not_picked_up %}
       <li>{{customer.name}} - {{customer.address}}</li>  
-      <a class="btn btn-primary btn-sm" href="{% url 'employees:serviced' customer.id %}" role="button">Mark Serviced</a> <br>
+      <a class="btn btn-primary btn-sm" href="{% url 'employees:serviced' customer.id %}" role="button">Picked up</a> <br>
     {% endfor %}
     </ul>
   {% else %}
