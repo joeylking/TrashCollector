@@ -84,9 +84,11 @@ def serviced(request,customer_id):
 def routes(request):
     logged_in_user = request.user
     logged_in_employee = Employee.objects.get(user=logged_in_user)
-    
+    Customer = apps.get_model('customers.Customer')
+    customers = Customer.objects.filter(zip_code = logged_in_employee.zip_code)
     context = {
         'logged_in_employee':logged_in_employee,
+        'customers' : customers
     }
 
     return render(request, 'employees/routes.html', context)
@@ -95,12 +97,13 @@ def daily(request, day):
     logged_in_user = request.user
     logged_in_employee = Employee.objects.get(user=logged_in_user)
     Customer = apps.get_model('customers.Customer')
-    daily_pickups = Customer.objects.filter(weekly_pickup = day)
+    customers_in_zip = Customer.objects.filter(zip_code = logged_in_employee.zip_code)
+    customers = customers_in_zip.filter(weekly_pickup = day)
 
     context = {
         'logged_in_employee':logged_in_employee,
-        'daily_pickups' : daily_pickups,
+        'customers' : customers,
         'day' : day
     }
 
-    return render(request, 'employees:daily', context)
+    return render(request, 'employees/routes.html', context)

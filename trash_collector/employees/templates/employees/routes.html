@@ -4,17 +4,18 @@
 
 {% block content %}
 
-<a href="#">Monday</a> | 
-<a href="#">Tuesday</a> | 
-<a href="#">Wednesday</a> | 
-<a href="#">Thursday</a> | 
-<a href="#">Friday</a> | 
+<a href="{% url 'employees:daily' 'Monday' %}">Monday</a> | 
+<a href="{% url 'employees:daily' 'Tuesday' %}">Tuesday</a> | 
+<a href="{% url 'employees:daily' 'Wednesday' %}">Wednesday</a> | 
+<a href="{% url 'employees:daily' 'Thursday' %}">Thursday</a> | 
+<a href="{% url 'employees:daily' 'Friday' %}">Friday</a> | 
 
 
-<!-- Employee {{ user.username }}'s weekly pickups for {{ day }} are: 
     <ul>
-    {% for customer in daily_pickups %}
+    {% for customer in customers %}
       <li>{{customer.name}} - {{customer.address}}</li>  
+    {% endfor %}
     </ul>
-    {% endfor %} -->
+
+
 {% endblock %}
