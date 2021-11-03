@@ -4,7 +4,7 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}! Today is {{ today_day }} {{ today_date }} These customers need pickup: 
+    Hello {{ user.username }}! Today is {{ today_day }}, {{ today_date }}. These customers are awaiting pickup: 
     <ul>
     {% for customer in customers_not_picked_up %}
       <li>{{customer.name}} - {{customer.address}}</li>  
