@@ -4,7 +4,7 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello {{ user.username }}! Today is {{ today_day }}, {{ today_date }}. These customers are awaiting pickup: 
+    Hello {{ logged_in_employee.name }}! Today is {{ today_day }}, {{ today_date }}. These customers are awaiting pickup: 
     <ul class="list-group">
     {% for customer in customers_not_picked_up %}
       <li class="list-group-item">{{customer.name}} - {{customer.address}}    <a class="btn btn-success btn-sm" href="{% url 'employees:serviced' customer.id %}" role="button">Complete</a> </li> 
